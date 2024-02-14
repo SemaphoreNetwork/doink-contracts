@@ -17,7 +17,7 @@ contract GameItem is ERC721 {
         _;
     }
 
-    constructor(address operator, uint256 maxCount) public ERC721("Doink", "DOINK") {
+    constructor(address operator, uint256 maxCount) ERC721("Doink", "DOINK") {
         if (operator == address(0)) {
             OPERATOR = msg.sender;
         } else {
