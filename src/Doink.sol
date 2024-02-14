@@ -10,12 +10,25 @@ contract GameItem is ERC721 {
     // so accounts can still transfer the item between each other.
     mapping(address minter => bool) private minters;
 
-    constructor(uint256 maxCount) public ERC721("Doink", "DOINK") {
+    address private immutable OPERATOR;
+
+    modifier onlyOperator() {
+        require(msg.sender == OPERATOR, "Unauthorized to call this function.");
+        _;
+    }
+
+    constructor(address operator, uint256 maxCount) public ERC721("Doink", "DOINK") {
+        if (operator == address(0)) {
+            OPERATOR = msg.sender;
+        } else {
+            OPERATOR = operator;
+        }
         MAX_COUNT = maxCount;
     }
 
     function mint(address receiver)
         public
+        onlyOperator
         returns (uint256)
     {
         // Get ID of the new NFT token.
