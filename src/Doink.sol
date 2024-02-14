@@ -6,6 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 contract GameItem is ERC721 {
     uint256 private currentTokenId = 1;
     uint256 private immutable MAX_COUNT;
+    // Each address will only be able to mint once. Note that the NFT is not soulbound,
+    // so accounts can still transfer the item between each other.
+    mapping(address minter => bool) private minters;
 
     constructor(uint256 maxCount) public ERC721("Doink", "DOINK") {
         MAX_COUNT = maxCount;
@@ -19,6 +22,10 @@ contract GameItem is ERC721 {
         uint256 id = currentTokenId;
         require(id < MAX_COUNT, "Max reached.");
         currentTokenId += 1;
+
+        // Make sure the receiver has not already received an NFT.
+        require(!minters[receiver], "Already minted.");
+        minters[receiver] = true;
 
         _safeMint(receiver, id);
 
