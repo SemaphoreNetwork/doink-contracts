@@ -3,7 +3,7 @@ pragma solidity ^0.8.14;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract GameItem is ERC721 {
+contract Doink is ERC721 {
     uint256 private currentTokenId = 1;
     uint256 private immutable MAX_COUNT;
     // Each address will only be able to mint once. Note that the NFT is not soulbound,
