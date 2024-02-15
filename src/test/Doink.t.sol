@@ -10,7 +10,7 @@ contract DoinkTest is Test {
 
     function setUp() public {
         // Deploy the Doink contract.
-        doink = new Doink(50);
+        doink = new Doink(address(this), 50);
     }
 
     function test_Doink__mint_works() public {
